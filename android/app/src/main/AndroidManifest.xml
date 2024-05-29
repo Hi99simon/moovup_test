@@ -3,6 +3,8 @@
         android:label="SIMON TEST"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
+        <meta-data android:name="com.google.android.geo.API_KEY"
+               android:value="AIzaSyBgYcYqnaPtw1fAndY4YIDWmrikq6-vD4Q"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"
