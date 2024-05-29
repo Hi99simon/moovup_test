@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:get/utils.dart';
 import 'package:moovup_test/models/user_model.dart';
 import 'package:moovup_test/network/api.dart';
 import 'package:moovup_test/widgets/user_item.dart';
 
 class UserList extends StatefulWidget {
   final ScrollController scrollController;
-  const UserList({super.key,required this.scrollController});
+  final Function(User) onTap;
+  const UserList({
+    super.key,
+    required this.scrollController,
+    required this.onTap,
+  });
 
   @override
   State<UserList> createState() => _UserListState();
@@ -36,11 +43,19 @@ class _UserListState extends State<UserList> {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      controller: widget.scrollController,
+        padding: EdgeInsets.zero,
+        controller: widget.scrollController,
         shrinkWrap: true,
         itemCount: users.length,
         itemBuilder: (context, index) {
-          return UserItem(user: users[index]);
+          return UserItem(
+            user: users[index],
+            onTap: (user) {
+              widget.onTap(user);
+            },
+          ).paddingOnly(
+            bottom: 16,
+          );
         });
   }
 }

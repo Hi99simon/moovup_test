@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/utils.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -60,9 +61,43 @@ class _MainScreenState extends State<MainScreen> {
             controller: draggableScrollableController, // Assuming you have defined this variable
             builder: (context, scrollController) {
               return Container(
-                height: 800,
-                color: Color.fromARGB(255, 238, 240, 240),
-                child: UserList(scrollController: scrollController),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(20),
+                    topRight: Radius.circular(20),
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.25),
+                      spreadRadius: 4,
+                      blurRadius: 16,
+                      offset: Offset(0, 0), // changes position of shadow
+                    ),
+                  ],
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Tap to lookup your friend's position",
+                      style: TextStyle(
+                        color: Color(0xFF2F2F2F),
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ).paddingSymmetric(horizontal: 16).paddingOnly(
+                          top: 16,
+                        ),
+                    Expanded(
+                        child: UserList(
+                      scrollController: scrollController,
+                      onTap: (user) {
+                        HapticFeedback.heavyImpact();
+                      },
+                    ).paddingAll(8)),
+                  ],
+                ),
               );
             },
           ),
