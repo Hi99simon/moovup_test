@@ -5,7 +5,7 @@ import 'dart:io';
 import 'package:http/http.dart' as http;
 
 class UserApi {
-  static Future<Map<String, dynamic>?> getUserList() async {
+  static Future<List<Map<String, dynamic>>> getUserList() async {
     http.Response response;
     try {
       const String apiPath = "https://api.json-generator.com/templates/-xdNcNKYtTFG/data";
@@ -20,13 +20,14 @@ class UserApi {
     }
     if (response.statusCode == 200) {
       if (response.body.isNotEmpty) {
-        var responseBody = jsonDecode(response.body);
-        return responseBody;
+        List<dynamic> responseBody = jsonDecode(response.body);
+        List<Map<String, dynamic>> userList = List<Map<String, dynamic>>.from(responseBody);
+        return userList;
       } else {
-        return null;
+        return [];
       }
     } else {
-      return null;
+      return [];
     }
   }
 }
