@@ -16,13 +16,13 @@ void main() {
   // Define the graph
   Map<String, List<String>> graph = {
     'A': ['B', 'D'],
-    'B': ['A', 'C', 'D', 'E'],
-    'C': ['B', 'F', 'G'],
-    'D': ['A', 'B', 'E'],
-    'E': ['B', 'D', 'H'],
-    'F': ['C', 'G'],
-    'G': ['C', 'F', 'H'],
-    'H': ['E', 'G'],
+    'B': ['A', 'C', 'D'],
+    'C': ['B', 'D', 'F'],
+    'D': ['A', 'B', 'C', 'E'],
+    'E': ['D', 'F', 'H'],
+    'F': ['C', 'E', 'G'],
+    'G': ['F', 'H'],
+    'H': ['E', 'G']
   };
 
   // a. Get all possible paths between A-H
@@ -89,9 +89,11 @@ void main() {
   for (List<String> path in allPaths) {
     print(path.join(' -> '));
   }
+  print('\nTotal path count: ${allPaths.length}');
 
   // b. Print the shortest path length between A-H
   int shortestPathLength = getShortestPathLength('A', 'H');
   print('\nShortest path length between A-H: $shortestPathLength');
 }
+
 ```
