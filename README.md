@@ -22,7 +22,7 @@ void main() {
     'E': ['D', 'F', 'H'],
     'F': ['C', 'E', 'G'],
     'G': ['F', 'H'],
-    'H': ['E', 'G']
+    'H': ['A','E', 'G']
   };
 
   // a. Get all possible paths between A-H
