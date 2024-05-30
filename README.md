@@ -15,7 +15,7 @@ import 'dart:collection';
 void main() {
   // Define the graph
   Map<String, List<String>> graph = {
-    'A': ['B', 'D'],
+    'A': ['B', 'D', 'H'],
     'B': ['A', 'C', 'D'],
     'C': ['B', 'D', 'F'],
     'D': ['A', 'B', 'C', 'E'],
