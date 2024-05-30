@@ -35,9 +35,7 @@ class _UserListState extends State<UserList> {
           itemBuilder: (context, index) {
             return UserItem(
               user: controller.users.value[index],
-              onTap: (user) {
-                widget.onTap(user);
-              },
+             
             ).paddingOnly(
               bottom: 16,
             );

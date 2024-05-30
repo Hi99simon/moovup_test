@@ -1,18 +1,18 @@
-import 'dart:convert';
+
 
 class User {
   final String id;
   final Name name;
   final String email;
   final String picture;
-  final Location? location;
+  final Location location;
 
   User({
     required this.id,
     required this.name,
     required this.email,
     required this.picture,
-    this.location,
+   required this.location,
   });
 
   factory User.fromJson(Map<String, dynamic> json) {
@@ -21,7 +21,7 @@ class User {
       name: Name.fromJson(json['name']),
       email: json['email'],
       picture: json['picture'],
-      location: json['location'] != null ? Location.fromJson(json['location']) : null,
+      location: Location.fromJson(json['location']),
     );
   }
 
@@ -65,14 +65,18 @@ class Location {
   final double? longitude;
 
   Location({
-    required this.latitude,
+    this.latitude,
     this.longitude,
   });
 
   factory Location.fromJson(Map<String, dynamic> json) {
+    double? lat = json['latitude'] is double ? json['latitude'] : null;
+    double? lng = json['longitude'] is double ? json['longitude'] : null;
+
+
     return Location(
-      latitude: json['latitude'],
-      longitude: json['longitude'],
+      latitude: lat,
+      longitude: lng,
     );
   }
 

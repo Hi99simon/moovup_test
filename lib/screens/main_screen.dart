@@ -43,11 +43,14 @@ class _MainScreenState extends State<MainScreen> {
                 Expanded(
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(20),
-                    child: GoogleMap(
-                        mapType: MapType.normal,
-                        myLocationEnabled: false,
-                        initialCameraPosition: StringConst.hongKongCentre, // Assuming you have defined this variable
-                        onMapCreated: _onMapCreated),
+                    child: Obx(() => GoogleMap(
+                          mapType: MapType.normal,
+                          myLocationEnabled: false,
+                          initialCameraPosition: StringConst.hongKongCentre, // Assuming you have defined this variable
+                          onMapCreated: _onMapCreated,
+                          
+                          markers: controller.markers.value,
+                        )),
                   ).paddingSymmetric(horizontal: 16),
                 ),
                 SizedBox(
@@ -110,15 +113,5 @@ class _MainScreenState extends State<MainScreen> {
 
   void _onMapCreated(GoogleMapController mapController) {
     controller.googleMapController = mapController;
-
-    mapController.animateCamera(
-      CameraUpdate.newCameraPosition(
-        CameraPosition(
-          target: LatLng(controller.selectedUsers.value.first.location!.latitude!,
-              controller.selectedUsers.value.first.location!.longitude!),
-          zoom: 11.5,
-        ),
-      ),
-    );
   }
 }

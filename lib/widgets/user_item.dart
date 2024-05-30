@@ -1,85 +1,92 @@
 import 'package:flutter/material.dart';
-import 'package:get/utils.dart';
+import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:moovup_test/controller/data_controller.dart';
 import 'package:moovup_test/models/user_model.dart';
 
-class UserItem extends StatefulWidget {
+class UserItem extends StatelessWidget {
   final User user;
-  final Function(User) onTap;
+
   const UserItem({
     super.key,
     required this.user,
-    required this.onTap,
   });
 
   @override
-  State<UserItem> createState() => _UserItemState();
-}
-
-class _UserItemState extends State<UserItem> {
-  @override
   Widget build(BuildContext context) {
+    DataController controller = Get.find();
+
+    double? latitude = user.location.latitude;
+    double? longitude = user.location.longitude;
+    bool hasLocation = latitude != null && longitude != null;
     return Material(
+      color: const Color(0xFFFAFAFA),
       borderRadius: BorderRadius.circular(16),
       child: InkWell(
-          onTap: () {
-            widget.onTap(widget.user);
-          },
-          borderRadius: BorderRadius.circular(16),
-          child: Row(
-            children: [
-              CircleAvatar(
-                backgroundColor: Color(
-                  0xFFF7F7F7,
-                ),
-                backgroundImage: NetworkImage(widget.user.picture),
-                radius: 24,
-              ),
-              SizedBox(width: 8),
-              Column(
+        onTap: () {
+          // Add your onTap logic here
+
+          if (!hasLocation) return;
+
+          LatLng latLng = LatLng(latitude, longitude);
+          controller.animateCamera(latlng: latLng);
+        },
+        borderRadius: BorderRadius.circular(16),
+        child: Row(
+          children: [
+            CircleAvatar(
+              backgroundColor: const Color(0xFFCCCCCC),
+              backgroundImage: NetworkImage(user.picture),
+              radius: 24,
+            ),
+            const SizedBox(width: 8),
+            Expanded(
+              child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   RichText(
                     text: TextSpan(
                       children: [
                         TextSpan(
-                          text: "${widget.user.name.first} ",
-                          style: TextStyle(
-                            color: Color(
-                              0xFF2F2F2F,
-                            ),
+                          text: "${user.name.first} ",
+                          style: const TextStyle(
+                            color: Color(0xFF2F2F2F),
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
-                            // Add any desired styles for the first name
                           ),
                         ),
                         TextSpan(
-                          text: "${widget.user.name.last}",
-                          style: TextStyle(
-                            color: Color(
-                              0xFF2F2F2F,
-                            ),
+                          text: user.name.last,
+                          style: const TextStyle(
+                            color: Color(0xFF2F2F2F),
                             fontSize: 16,
                             fontWeight: FontWeight.w500,
-                            // Add any desired styles for the last name
                           ),
                         ),
                       ],
                     ),
                   ),
                   Text(
-                    widget.user.email,
-                    style: TextStyle(
-                      color: Color(
-                        0xFFA6A6A6,
-                      ),
+                    user.email,
+                    style: const TextStyle(
+                      color: Color(0xFFA6A6A6),
                       fontSize: 14,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
                 ],
               ),
-            ],
-          ).paddingAll(8)),
+            ),
+            if (hasLocation) ...[
+              Icon(
+                Icons.location_on,
+                color: Colors.pink,
+                size: 24,
+              )
+            ]
+          ],
+        ).paddingAll(8),
+      ),
     );
   }
 }
