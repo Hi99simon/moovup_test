@@ -1,8 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:get/instance_manager.dart';
+import 'package:moovup_test/controller/data_controller.dart';
 import 'package:moovup_test/screens/main_screen.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  initControllers();
   runApp(const MyApp());
+}
+
+initControllers() {
+  Get.put(DataController());
 }
 
 class MyApp extends StatelessWidget {

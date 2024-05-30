@@ -1,10 +1,9 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
-import 'package:get/utils.dart';
+import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:moovup_test/const/string_const.dart';
+import 'package:moovup_test/controller/data_controller.dart';
 import 'package:moovup_test/widgets/user_list.dart';
 
 class MainScreen extends StatefulWidget {
@@ -15,12 +14,18 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  final Completer<GoogleMapController> _controller = Completer<GoogleMapController>();
-  DraggableScrollableController draggableScrollableController = DraggableScrollableController();
-  static const CameraPosition _hongKongCentre = CameraPosition(
-    target: LatLng(22.3193, 114.1694),
-    zoom: 14.4746,
-  );
+  DataController controller = Get.find();
+
+  @override
+  void initState() {
+    initData();
+    super.initState();
+  }
+
+  initData() async {
+    await controller.initUsers();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,13 +44,10 @@ class _MainScreenState extends State<MainScreen> {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(20),
                     child: GoogleMap(
-                      mapType: MapType.normal,
-                      myLocationEnabled: false,
-                      initialCameraPosition: _hongKongCentre, // Assuming you have defined this variable
-                      onMapCreated: (GoogleMapController controller) {
-                        _controller.complete(controller);
-                      },
-                    ),
+                        mapType: MapType.normal,
+                        myLocationEnabled: false,
+                        initialCameraPosition: StringConst.hongKongCentre, // Assuming you have defined this variable
+                        onMapCreated: _onMapCreated),
                   ).paddingSymmetric(horizontal: 16),
                 ),
                 SizedBox(
@@ -58,7 +60,7 @@ class _MainScreenState extends State<MainScreen> {
             initialChildSize: 0.22,
             minChildSize: 0.20,
             maxChildSize: 0.60,
-            controller: draggableScrollableController, // Assuming you have defined this variable
+            controller: controller.draggableScrollableController, // Assuming you have defined this variable
             builder: (context, scrollController) {
               return Container(
                 decoration: BoxDecoration(
@@ -102,6 +104,20 @@ class _MainScreenState extends State<MainScreen> {
             },
           ),
         ],
+      ),
+    );
+  }
+
+  void _onMapCreated(GoogleMapController mapController) {
+    controller.googleMapController = mapController;
+
+    mapController.animateCamera(
+      CameraUpdate.newCameraPosition(
+        CameraPosition(
+          target: LatLng(controller.selectedUsers.value.first.location!.latitude!,
+              controller.selectedUsers.value.first.location!.longitude!),
+          zoom: 11.5,
+        ),
       ),
     );
   }

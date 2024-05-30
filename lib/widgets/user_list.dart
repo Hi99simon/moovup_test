@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:get/utils.dart';
+import 'package:get/get.dart';
+import 'package:moovup_test/controller/data_controller.dart';
 import 'package:moovup_test/models/user_model.dart';
-import 'package:moovup_test/network/api.dart';
 import 'package:moovup_test/widgets/user_item.dart';
 
 class UserList extends StatefulWidget {
@@ -19,43 +18,30 @@ class UserList extends StatefulWidget {
 }
 
 class _UserListState extends State<UserList> {
-  List<User> users = [];
-
+  DataController controller = Get.find();
   @override
   void initState() {
     super.initState();
-    init();
-  }
-
-  init() async {
-    List<Map<String, dynamic>> response = await UserApi.getUserList();
-    if (response != null) {
-      List<User> userList = [];
-      for (var user in response) {
-        userList.add(User.fromJson(user));
-      }
-      setState(() {
-        users = userList;
-      });
-    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-        padding: EdgeInsets.zero,
-        controller: widget.scrollController,
-        shrinkWrap: true,
-        itemCount: users.length,
-        itemBuilder: (context, index) {
-          return UserItem(
-            user: users[index],
-            onTap: (user) {
-              widget.onTap(user);
-            },
-          ).paddingOnly(
-            bottom: 16,
-          );
-        });
+    return Obx(
+      () => ListView.builder(
+          padding: EdgeInsets.zero,
+          controller: widget.scrollController,
+          shrinkWrap: true,
+          itemCount: controller.users.value.length,
+          itemBuilder: (context, index) {
+            return UserItem(
+              user: controller.users.value[index],
+              onTap: (user) {
+                widget.onTap(user);
+              },
+            ).paddingOnly(
+              bottom: 16,
+            );
+          }),
+    );
   }
 }

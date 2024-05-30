@@ -38,6 +38,7 @@ dependencies:
   http: ^1.2.1
   google_maps_flutter: ^2.6.1
   get: ^4.6.6
+  screenshot: ^3.0.0
 
 dev_dependencies:
   flutter_test:
