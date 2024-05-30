@@ -2,15 +2,27 @@
 
 Moovup Test
 
-## Getting Started
+## Question 1
 
-This project is a starting point for a Flutter application.
+Use the following undirected graph ­- nodes can be visited only once:
 
-A few resources to get you started if this is your first Flutter project:
+![List](assets/graph_test.png)
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- a. Write a function that returns all the possible paths between A­-H.
+
+```
+//define graph nodes
+Map<String, List<String>> graph = {
+    'A': ['B', 'D'],
+    'B': ['A', 'C', 'D', 'E'],
+    'C': ['B', 'F', 'G'],
+    'D': ['A', 'B', 'E'],
+    'E': ['B', 'D', 'H'],
+    'F': ['C', 'G'],
+    'G': ['C', 'F', 'H'],
+    'H': ['E', 'G'],
+  };
+
+```
+- b. Write a function that returns the least number of hops (shortest path) between A­-H.
