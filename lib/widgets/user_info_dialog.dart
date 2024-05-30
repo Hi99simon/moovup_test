@@ -52,10 +52,21 @@ class _UserInfoDialogState extends State<UserInfoDialog> {
                 )
               ],
             ),
-            CircleAvatar(
-              backgroundColor: Color(0xffF7F7F7),
-              backgroundImage: NetworkImage(widget.user.picture),
-              radius: 48,
+            Container(
+              width: 96,
+              height: 96,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: const Color(0xFFCCCCCC),
+              ),
+              child: ClipOval(
+                child: Image.network(
+                  widget.user.picture,
+                  width: 48,
+                  height: 48,
+                  fit: BoxFit.cover,
+                ),
+              ),
             ),
             Text(
               "${widget.user.name.first} ${widget.user.name.last}",
