@@ -28,6 +28,7 @@ class _UserListState extends State<UserList> {
   Widget build(BuildContext context) {
     return Obx(
       () => ListView.builder(
+          //  physics: NeverScrollableScrollPhysics(),
           padding: EdgeInsets.zero,
           controller: widget.scrollController,
           shrinkWrap: true,
@@ -35,7 +36,6 @@ class _UserListState extends State<UserList> {
           itemBuilder: (context, index) {
             return UserItem(
               user: controller.users.value[index],
-             
             ).paddingOnly(
               bottom: 16,
             );

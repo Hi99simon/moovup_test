@@ -48,7 +48,7 @@ class _MainScreenState extends State<MainScreen> {
                           myLocationEnabled: false,
                           initialCameraPosition: StringConst.hongKongCentre, // Assuming you have defined this variable
                           onMapCreated: _onMapCreated,
-                          
+
                           markers: controller.markers.value,
                         )),
                   ).paddingSymmetric(horizontal: 16),
@@ -60,7 +60,7 @@ class _MainScreenState extends State<MainScreen> {
             ),
           ),
           DraggableScrollableSheet(
-            initialChildSize: 0.22,
+            initialChildSize: 0.24,
             minChildSize: 0.20,
             maxChildSize: 0.60,
             controller: controller.draggableScrollableController, // Assuming you have defined this variable

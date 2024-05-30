@@ -27,17 +27,32 @@ class UserItem extends StatelessWidget {
           // Add your onTap logic here
 
           if (!hasLocation) return;
-
           LatLng latLng = LatLng(latitude, longitude);
           controller.animateCamera(latlng: latLng);
+          controller.draggableScrollableController.animateTo(
+            0.24,
+            duration: Duration(milliseconds: 300),
+            curve: Curves.decelerate,
+          );
         },
         borderRadius: BorderRadius.circular(16),
         child: Row(
           children: [
-            CircleAvatar(
-              backgroundColor: const Color(0xFFCCCCCC),
-              backgroundImage: NetworkImage(user.picture),
-              radius: 24,
+            Container(
+              width: 48,
+              height: 48,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: const Color(0xFFCCCCCC),
+              ),
+              child: ClipOval(
+                child: Image.network(
+                  user.picture,
+                  width: 48,
+                  height: 48,
+                  fit: BoxFit.cover,
+                ),
+              ),
             ),
             const SizedBox(width: 8),
             Expanded(

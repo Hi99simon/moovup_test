@@ -47,7 +47,7 @@ class DataController extends GetxController {
 
     for (int i = 0; i < selectedUsers.value.length; i++) {
       var user = selectedUsers.value[i];
-      await putMarker(
+      putMarker(
         user.picture,
         user.name.first,
         user.id,
